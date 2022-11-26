@@ -4,9 +4,23 @@ import { Box } from './reusableComponents';
 import ContactsInput from './ContactsInput';
 import ContactsList from './ContactsList';
 import Filter from './Filter';
+import storage from './localStorageAPI';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
+
+  componentDidMount() {
+    const savedContacts = storage.get('contacts');
+    this.setState({ contacts: [...savedContacts] });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const currentContacts = this.state.contacts;
+    const prevContacts = prevState.contacts;
+    if (prevContacts !== currentContacts) {
+      storage.update('contacts', [...currentContacts]);
+    }
+  }
 
   onFormSubmit = ({ name, number }) => {
     const newContact = {
