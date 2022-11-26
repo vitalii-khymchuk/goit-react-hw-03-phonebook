@@ -1,11 +1,13 @@
-const update = (item, data) => {
+function update(item, data) {
   const stringified = JSON.stringify(data);
   localStorage.setItem(item, stringified);
-};
+}
 
-const get = item => {
+function get(item) {
   const savedData = localStorage.getItem(item);
   return JSON.parse(savedData);
-};
+}
 
-export default { update, get };
+const storage = { update, get };
+
+export default storage;
