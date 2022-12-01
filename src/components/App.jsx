@@ -4,7 +4,7 @@ import { Box } from './reusableComponents';
 import ContactsInput from './ContactsInput';
 import ContactsList from './ContactsList';
 import Filter from './Filter';
-import storage from './localStorageAPI';
+import storage from '../Services';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
