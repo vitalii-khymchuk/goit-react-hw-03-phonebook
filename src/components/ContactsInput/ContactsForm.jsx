@@ -1,27 +1,14 @@
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { InputLabel } from 'components/ContactsInput/ContactsForm.styled';
+import {
+  InputLabel,
+  Input,
+  ErrorMsgStyled,
+} from 'components/ContactsInput/ContactsForm.styled';
 import { Button } from 'components/reusableComponents';
 import { Title } from 'components/reusableComponents';
 import { Box } from 'components/reusableComponents';
-
-const Input = styled(Field)`
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  margin-bottom: 4px;
-`;
-
-const ErrorMsgStyled = styled(ErrorMessage)`
-  width: 100%;
-  padding: 4px;
-  display: block;
-  font-size: 12px;
-  box-sizing: border-box;
-  border: 1px solid red;
-`;
 
 const validationSchema = yup.object().shape({
   name: yup

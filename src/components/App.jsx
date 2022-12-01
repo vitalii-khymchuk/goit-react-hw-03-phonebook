@@ -23,21 +23,20 @@ export class App extends Component {
   }
 
   onFormSubmit = ({ name, number }) => {
+    const isInContacts = this.state.contacts.some(contact => {
+      const existName = contact.name.toLowerCase();
+      const newName = name.toLowerCase();
+      return existName === newName;
+    });
+    if (isInContacts) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
     const newContact = {
       name,
       number,
       id: nanoid(),
     };
-    if (
-      this.state.contacts.some(contact => {
-        const existName = contact.name.toLowerCase();
-        const newName = name.toLowerCase();
-        return existName === newName;
-      })
-    ) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
     this.setState(prevState => {
       const currentContacts = prevState.contacts;
       return { contacts: [...currentContacts, newContact] };
@@ -59,18 +58,16 @@ export class App extends Component {
 
   render() {
     const { onFormSubmit, onContactDelete, onFilterChange } = this;
-    const filterValue = this.state.filter;
-    const contacts = this.state.contacts;
+    const { filter: filterValue, contacts } = this.state;
     const filteredContacts = contacts.filter(
       ({ name, number }) =>
-        name.toLowerCase().includes(filterValue) ||
-        number.toLowerCase().includes(filterValue)
+        name.toLowerCase().includes(filterValue) || number.includes(filterValue)
     );
     return (
       <Box border="1px solid black" width="300px" mt="15px" ml="15px" p="4px">
         <h1>Phonebook</h1>
         <ContactsInput onFormSubmit={onFormSubmit} />
-        {contacts[0] && (
+        {!!contacts.length && (
           <>
             <Filter onFilterChange={onFilterChange} value={filterValue} />
             <ContactsList
